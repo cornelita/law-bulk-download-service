@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package download;
+
+service DownloadService {
+    rpc DownloadVideo(VideoRequest) returns (VideoPathResponse);
+}
+
+message VideoRequest {
+    string videoId = 1;
+}
+
+message VideoPathResponse {
+    string filePath = 1;
+}
