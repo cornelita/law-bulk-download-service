@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from bd_service.views.bulk_download import BulkDownloadView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('bulk-download/', BulkDownloadView.as_view(), name='bulk_download'),
 ]
