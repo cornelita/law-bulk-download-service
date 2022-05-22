@@ -1,0 +1,40 @@
+version: "3.15"
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/redis
+
+  app:
+    image: app-image
+    container_name: bulk-download-service
+    build: .
+    command: sh ./scripts/runapp.sh
+    volumes:
+      - .:/src
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  worker:
+    image: app-image:latest
+    depends_on:
+      - redis
+    command: rq worker --url redis://redis:6379
+    links:
+      - redis
+
+  rq-dashboard:
+    image: jaredv/rq-docker:0.0.2
+    depends_on:
+      - redis
+    command: rq-dashboard -H redis
+    ports:
+      - 9181:9181
+
+volumes:
+  redis_data:
