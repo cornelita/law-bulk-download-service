@@ -2,8 +2,8 @@ from grpc_tools import protoc
 
 protoc.main((
     '',
-    '--proto_path=./bd_service/api/protoc/protos',
+    '--proto_path=./bd_service/protoc/protos',
     '--python_out=.',
     '--grpc_python_out=.',
-    './bd_service/api/protoc/protos/download.proto',
+    './bd_service/protoc/protos/download.proto',
 ))
