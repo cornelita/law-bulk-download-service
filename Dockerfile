@@ -16,8 +16,8 @@ RUN apk update \
 WORKDIR /src
 
 RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+COPY ./requirements-chill.txt .
+RUN pip install -r requirements-chill.txt
 
 COPY . .
 RUN python bd_service/protoc/generate_pb.py
