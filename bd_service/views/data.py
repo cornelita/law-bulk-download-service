@@ -33,7 +33,6 @@ def get_multiple_progress_data_by_key(keys):
 def get_multiple_download_and_progress_by_key(keys):
     download_data = get_multiple_download_data_by_key(keys)
     progress_data = get_multiple_progress_data_by_key(keys)
-    print(progress_data)
     result = []
 
     for i in range(len(download_data)):
