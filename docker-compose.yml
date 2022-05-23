@@ -27,6 +27,9 @@ services:
     command: rq worker --url redis://redis:6379
     links:
       - redis
+    deploy:
+      mode: replicated
+      replicas: 5
 
   rq-dashboard:
     image: jaredv/rq-docker:0.0.2
