@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.views import APIView
 from rq import Queue
+from rq import Retry
 
 from bd_service.utils.response import error_response
 from bd_service.utils.response import success_create_response
@@ -46,7 +47,8 @@ class BulkDownloadView(APIView):
             return error_response('Parameter "videoIds" is required', status.HTTP_400_BAD_REQUEST)
 
         key = str(random.randint(0, 1000)) + str(datetime.now().timestamp())
-        q.enqueue(download_videos, args=(key, video_ids))
+        q.enqueue(download_videos, args=(key, video_ids),
+                  retry=Retry(max=3), timeout=3600, failure_ttl=86400)
 
         logger.info(f'[BulkDownload] POST request success: {datetime.now()}')
         return success_create_response(key)
