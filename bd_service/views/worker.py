@@ -6,6 +6,8 @@ import requests
 from rest_framework import status
 from rest_framework.response import Response
 
+from bd_service.constants import K_API_DOWNLOAD_URL
+from bd_service.constants import K_API_ZIPPER_URL
 from bd_service.views.data import set_download_data
 from bd_service.views.data import set_progress_data
 from download_pb2 import VideoRequest
@@ -21,7 +23,7 @@ def download_videos(key, video_ids):
     progress_calc = 100 / (len(video_ids) + 1)
     progress_job = 0
     try:
-        with grpc.insecure_channel('34.69.93.198:50051') as channel:
+        with grpc.insecure_channel(K_API_DOWNLOAD_URL) as channel:
             stub = DownloadServiceStub(channel)
             for video_id in video_ids:
                 response = stub.DownloadVideo(
@@ -43,7 +45,7 @@ def download_videos(key, video_ids):
 
 def zip_file(key, paths):
     logger.info(f'[BulkDownload] Starting zipping video: {key}')
-    response = requests.post('http://34.69.93.198:8001/zipper/', json={
+    response = requests.post(f'{K_API_ZIPPER_URL}/zipper/', json={
         'videos': paths
     })
     logger.info(f'[BulkDownload] Zip file received: {datetime.now()}')
