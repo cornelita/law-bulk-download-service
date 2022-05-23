@@ -5,7 +5,7 @@ r = redis.Redis(host='redis', port=6379)
 
 
 def set_progress_data(key, value):
-    r.set(f'P-{key}', value)
+    r.set(f'P-{key}', value, ex=3600)
 
 
 def get_progress_data_by_key(key):
@@ -13,7 +13,7 @@ def get_progress_data_by_key(key):
 
 
 def set_download_data(key, value):
-    r.set(f'D-{key}', value)
+    r.set(f'D-{key}', value, ex=3600)
 
 
 def get_download_data_by_key(key):
