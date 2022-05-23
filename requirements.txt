@@ -38,6 +38,7 @@ kombu==5.2.4
 msgpack==1.0.3
 nodeenv==1.6.0
 packaging==21.3
+pip-chill==1.0.1
 platformdirs==2.5.2
 pre-commit==2.19.0
 prompt-toolkit==3.0.29
