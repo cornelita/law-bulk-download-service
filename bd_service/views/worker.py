@@ -48,6 +48,10 @@ def zip_file(key, paths):
     response = requests.post(f'{K_API_ZIPPER_URL}/zipper/', json={
         'videos': paths
     })
-    logger.info(f'[BulkDownload] Zip file received: {datetime.now()}')
-    set_download_data(key, response.content)
-    set_progress_data(key, 100)
+    if response.status_code != 200:
+        set_progress_data(key, -1)
+        raise RuntimeError('Zip failed')
+    else:
+        logger.info(f'[BulkDownload] Zip file received: {datetime.now()}')
+        set_download_data(key, response.content)
+        set_progress_data(key, 100)
