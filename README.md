@@ -123,15 +123,15 @@
 
     3. **Not Found - Data cannot be found or still in progress**
 
-        URL: {{base_url}}/bulk-download/
+        URL: {{base_url}}/bulk-download/?bulkDownloadId=767165314448
 
-        Status: 400
+        Status: 404
 
         Response:
 
         ```
         {
-            "detail": "Parameter \"bulkDownloadId\" is required"
+            "detail": "Data with id 767165314448 cannot be found or still in progress"
         }
         ```
 
