@@ -2,8 +2,8 @@ import logging
 import random
 from datetime import datetime
 
-import redis
 from django.http import HttpResponse
+from redis import Redis
 from rest_framework import status
 from rest_framework.views import APIView
 from rq import Queue
@@ -17,7 +17,7 @@ from bd_service.views.data import get_download_data_by_key
 from bd_service.views.data import get_multiple_download_and_progress_by_key
 from bd_service.views.worker import download_videos
 
-r = redis.Redis(host='redis', port=6379)
+r = Redis(host='redis', port=6379)
 q = Queue(connection=r)
 
 logger = logging.getLogger(__name__)
@@ -46,7 +46,8 @@ class BulkDownloadView(APIView):
         if video_ids is None:
             return error_response('Parameter "videoIds" is required', status.HTTP_400_BAD_REQUEST)
 
-        key = str(random.randint(0, 1000)) + str(datetime.now().timestamp())
+        key = str(random.randint(0, 1000)) + \
+            str(int(round(datetime.now().timestamp())))
         q.enqueue(download_videos, args=(key, video_ids),
                   retry=Retry(max=3), timeout=3600, failure_ttl=86400)
 
