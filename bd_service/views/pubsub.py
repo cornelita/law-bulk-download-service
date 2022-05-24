@@ -17,17 +17,13 @@ class Listener(Thread):
         self.pubsub.subscribe(channels)
 
     def work(self, item):
-        print(item['channel'], ":", item['data'])
         self.notify_update_progress(item['channel'])
 
     def run(self):
-        print("running")
         for item in self.pubsub.listen():
             self.work(item)
 
     def notify_update_progress(self, bulk_download_id):
-        print('notify_update_progress')
-        print(bulk_download_id)
         channel_layer = get_channel_layer()
         progress_data = get_progress_data_by_key(bulk_download_id)
         async_to_sync(channel_layer.group_send)(
