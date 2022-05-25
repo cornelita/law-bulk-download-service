@@ -16,14 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from bd_service.views.bulk_download import BulkDownloadAllView
 from bd_service.views.bulk_download import BulkDownloadView
 from bd_service.views.rq import requeue_jobs
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('bulk-download/', BulkDownloadView.as_view(), name='bulk_download'),
-    path('bulk-download/all/', BulkDownloadAllView.as_view(),
-         name='bulk_download_all'),
     path('rq/requeue/', requeue_jobs),
 ]

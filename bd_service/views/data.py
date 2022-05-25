@@ -30,22 +30,5 @@ def get_multiple_progress_data_by_key(keys):
     return r.mget(keys_formatted)
 
 
-def get_multiple_download_and_progress_by_key(keys):
-    download_data = get_multiple_download_data_by_key(keys)
-    progress_data = get_multiple_progress_data_by_key(keys)
-    result = []
-
-    for i in range(len(download_data)):
-        if progress_data[i] is None:
-            progress_data[i] = 0
-
-        result.append({
-            'id': keys[i],
-            'data': f'Bulk Download {keys[i]}',
-            'progress': progress_data[i]
-        })
-    return result
-
-
 def delete_progress_and_download_data(key):
     r.delete(f'{key}:D', f'{key}:P')

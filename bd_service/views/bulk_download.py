@@ -12,10 +12,8 @@ from rq import Retry
 from bd_service.auth.kami_random_auth import KamiRandomAuthentication
 from bd_service.utils.response import error_response
 from bd_service.utils.response import success_create_response
-from bd_service.utils.response import success_get_all_response
 from bd_service.views.data import delete_progress_and_download_data
 from bd_service.views.data import get_download_data_by_key
-from bd_service.views.data import get_multiple_download_and_progress_by_key
 from bd_service.views.worker import download_videos
 
 r = Redis(host='redis', port=6379)
@@ -56,19 +54,3 @@ class BulkDownloadView(APIView):
 
         logger.info(f'[BulkDownload] POST request success: {datetime.now()}')
         return success_create_response(key)
-
-
-class BulkDownloadAllView(APIView):
-    def post(self, request):
-        logger.info(
-            f'[BulkDownloadAll] GET request received: {datetime.now()}')
-
-        bulk_download_ids = request.data.get('bulkDownloadIds')
-        if bulk_download_ids is None:
-            return error_response('Parameter "bulkDownloadIds" is required', status.HTTP_400_BAD_REQUEST)
-
-        download_data = get_multiple_download_and_progress_by_key(
-            bulk_download_ids)
-
-        logger.info(f'[BulkDownloadAll] GET request success: {datetime.now()}')
-        return success_get_all_response(download_data)
