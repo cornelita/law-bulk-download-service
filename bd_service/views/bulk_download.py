@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rq import Queue
 from rq import Retry
 
+from bd_service.auth.kami_random_auth import KamiRandomAuthentication
 from bd_service.utils.response import error_response
 from bd_service.utils.response import success_create_response
 from bd_service.utils.response import success_get_all_response
@@ -24,6 +25,8 @@ logger = logging.getLogger(__name__)
 
 
 class BulkDownloadView(APIView):
+    authentication_classes = (KamiRandomAuthentication,)
+
     def get(self, request):
         logger.info(f'[BulkDownload] GET request received: {datetime.now()}')
 
