@@ -17,7 +17,7 @@ from bd_service.views.data import get_download_data_by_key
 from bd_service.views.worker import download_videos
 
 r = Redis(host='redis', port=6379)
-q = Queue(connection=r)
+q = Queue(connection=r, default_timeout=3600)
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ class BulkDownloadView(APIView):
         key = str(random.randint(0, 1000)) + \
             str(int(round(datetime.now().timestamp())))
         q.enqueue(download_videos, args=(key, video_ids),
-                  retry=Retry(max=3), timeout=3600, failure_ttl=86400)
+                  retry=Retry(max=3), failure_ttl=86400)
 
         logger.info(f'[BulkDownload] POST request success: {datetime.now()}')
         return success_create_response(key)

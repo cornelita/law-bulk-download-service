@@ -47,10 +47,11 @@ def download_videos(key, video_ids):
 
     try:
         content = zip_file(key, paths)
-        set_progress_data(key, 100)
         set_download_data(key, content)
+        set_progress_data(key, 100)
         r.publish(key, key)
-    except AssertionError:
+    except (AssertionError, ConnectionError) as e:
+        logger.error(f'[BulkDownload] Error raised: {e}')
         set_progress_data(key, -1)  # error
         r.publish(key, key)
         raise
