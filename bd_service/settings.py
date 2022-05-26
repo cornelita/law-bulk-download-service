@@ -46,6 +46,10 @@ LOGGING = {
             'format': '{levelname} - {asctime} > {module} -- {message}',
             'style': '{',
         },
+        'log': {
+            'format': '"levelname"="{levelname}","timestamp"="{asctime}","module"="{module}","message"="{message}"',
+            'style': '{',
+        }
     },
     'handlers': {
         'console': {
@@ -55,8 +59,9 @@ LOGGING = {
         },
         'file': {
             'level': 'INFO',
+            'formatter': 'log',
             'class': 'logging.FileHandler',
-            'filename': './info.txt',
+            'filename': './log.txt',
         },
     }
 }
