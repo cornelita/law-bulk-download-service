@@ -39,20 +39,25 @@ LOGGING = {
     'disable_existing_loggers': False,
     'root': {
         'level': 'INFO',
-        'handlers': ['console'],
+        'handlers': ['console', 'file'],
     },
     'formatters': {
         'verbose': {
-            'format': '{levelname} > {module} -- {message}',
+            'format': '{levelname} - {asctime} > {module} -- {message}',
             'style': '{',
-        }
+        },
     },
     'handlers': {
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
-        }
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': './info.txt',
+        },
     }
 }
 
