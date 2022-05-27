@@ -39,7 +39,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'root': {
         'level': 'INFO',
-        'handlers': ['console', 'file'],
+        'handlers': ['console', 'file', 'logcentral'],
     },
     'formatters': {
         'verbose': {
@@ -62,6 +62,12 @@ LOGGING = {
             'formatter': 'log',
             'class': 'logging.FileHandler',
             'filename': './log.txt',
+        },
+        'logcentral': {
+            'level': 'INFO',
+            'formatter': 'log',
+            'class': 'logging.FileHandler',
+            'filename': './logcentral.txt',
         },
     }
 }

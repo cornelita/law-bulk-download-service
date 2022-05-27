@@ -3,6 +3,7 @@ db.sqlite3
 *.pyc
 .env
 log.txt
+logcentral.txt
 
 # gRPC related
 *pb2*
