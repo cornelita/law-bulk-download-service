@@ -2,7 +2,7 @@ import requests
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 
-API_AUTH_URL = 'http://34.168.241.7'
+API_AUTH_URL = 'http://35.227.139.100'
 
 
 class KamiRandomAuthentication(BaseAuthentication):
